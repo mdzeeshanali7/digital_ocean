@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EMOT Forgot Password</title>
+  <link rel="stylesheet" href="../static/css/style.css">
+</head>
+<body>
+  <div class="wrapper">
+    <form action="/forgot" method="post">
+      <img src="../static/img/EMOT.PNG" class="logo">
+      <h2>Forgot Password</h2>
+        <div class="input-field">
+        <input type="text" id="email" name="email" required onblur="checkEmail()">
+        <label id="l2">Enter your email</label>
+  <div id="email-error" style="display: none; color: red;"></div>
+
+      </div>
+      <div class="input-field">
+        <input type="text" id="phone" name="phone" required onblur="checkPhoneNumber()">
+        <label id="l3">Enter your phone number</label>
+        <div id="phone_number-error" style="display: none; color: red;"></div>
+
+
+      </div>
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+
+
+  <script>
+    function checkEmail() {
+      var email = document.getElementById("email");
+      var error = document.getElementById("email-error");
+      let l2 = document.getElementById("l2");
+      var emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      if (email.value.match(emailRegex)) {
+        email.style.border = "1px solid green";
+        error.style.display = "none";
+      } else {
+        email.style.border = "1px solid red";
+        error.style.display = "block";
+        error.innerText = "Invalid email address";
+        l2.style.display = "none"
+
+      }
+    }
+  
+
+
+
+      function checkPhoneNumber() {
+      var phoneNumber = document.getElementById("phone_number");
+      var error = document.getElementById("phone_number-error");
+      let l1 = document.getElementById("l3");
+      var phoneRegex = /^\d{10}$/;
+      if (phoneNumber.value.match(phoneRegex)) {
+        phoneNumber.style.border = "1px solid green";
+        error.style.display = "none";
+      } else {
+        phoneNumber.style.border = "1px solid red";
+        error.style.display = "block";
+        error.innerText = "Phone number should be 10 digits long";
+        l1.style.display = "none"
+
+      }
+    }
+  
+
+  </script>
+</body>
+</html>

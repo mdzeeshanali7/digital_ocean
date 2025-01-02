@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EMOT OTP Verification Form</title>
+  <link rel="stylesheet" href="../static/css/style.css">
+</head>
+<body>
+  <div class="wrapper">
+<form action="/verify_otp" method="post">
+  <img src="../static/img/EMOT.PNG" class="logo">
+  <h2>OTP Verification</h2>
+  <!-- <div class="input-field">
+    <input type="email" id="email" name="email" required onblur="checkEmail()">
+    <label id="l1">Enter your Email here</label>
+    <div id="email-error" style="display: none; color: red;"></div>
+  </div> -->
+  <div class="input-field">
+    <input type="text" id="otp" name="otp" required onblur="checkOTP()">
+    <label id="l2">Enter your OTP here</label>
+  <div id="otp-error" style="display: none; color: red;"></div>
+
+  </div>
+  <button type="submit" onclick="checkOTP()">Submit</button>
+</form>
+</div>
+
+<script>
+      function checkEmail() {
+      var email = document.getElementById("email");
+      var error = document.getElementById("email-error");
+      let l1 = document.getElementById("l1");
+      var emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      if (email.value.match(emailRegex)) {
+        email.style.border = "1px solid green";
+        error.style.display = "none";
+      } else {
+        email.style.border = "1px solid red";
+        error.style.display = "block";
+        error.innerText = "Invalid email address";
+        l1.style.display = "none"
+
+      }
+    }
+function checkOTP() {
+  var otp = document.getElementById("otp");
+  var error = document.getElementById("otp-error");
+  var l2 = document.getElementById("l2");
+  var otpRegex = /^\d{6}$/;
+  if (otp.value.match(otpRegex)) {
+    otp.style.border = "1px solid green";
+    error.style.display = "none";
+  } else {
+    otp.style.border = "1px solid red";
+    error.style.display = "block";
+    error.innerText = " OTP should be 6 digits";
+    l2.style.display = "none"
+  }
+}</script>
+</body>
+</html>

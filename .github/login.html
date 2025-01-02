@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EMOT Login Form</title>
+  <link rel="stylesheet" href="../static/css/style.css">
+</head>
+
+<body>
+  <div class="wrapper">
+    <form action="/login" method="post">
+      <img src="../static/img/EMOT.PNG" class="logo">
+      <h2>Login</h2>
+      <div class="input-field">
+        <input type="email" id="email" name="email" required onblur="checkEmail()">
+        <label id="l1">Enter your Email here</label>
+        <div id="email-error" style="display: none; color: red;"></div>
+      </div>
+      <div class="input-field">
+        <input type="password" id="password" name="password" required onblur="checkPassword()">
+        <label id="l2">Enter your password</label>
+        <div id="password-error" style="display: none; color: red;"></div>
+
+      </div>
+      <div class="forget">
+        <label for="remember">
+          <input type="checkbox" id="remember">
+          <p>Remember me</p>
+        </label>
+        <a href="/forgot">Forgot password?</a>
+      </div>
+      <button type="submit">Log In</button>
+      <div class="register">
+        <p>Don't have an account? <a href="/">Register</a></p>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    function checkEmail() {
+      var email = document.getElementById("email");
+      var error = document.getElementById("email-error");
+      let l1 = document.getElementById("l1");
+      var emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      if (email.value.match(emailRegex)) {
+        email.style.border = "1px solid green";
+        error.style.display = "none";
+      } else {
+        email.style.border = "1px solid red";
+        error.style.display = "block";
+        error.innerText = "Invalid email address";
+        l1.style.display = "none"
+
+      }
+    }
+    function checkPassword() {
+      var password = document.getElementById("password");
+      var error = document.getElementById("password-error");
+      var passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+      let l2 = document.getElementById("l2");
+      if (password.value.match(passwordRegex)) {
+        password.style.border = "1px solid green";
+        error.style.display = "none";
+      } else {
+        password.style.border = "1px solid red";
+        error.style.display = "block";
+        error.innerText = "Password should be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, one number and one special character";
+        l1.style.display = "none"
+        
+      }
+    }
+    </script>
+</body>
+
+</html>

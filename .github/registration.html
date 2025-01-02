@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EMOT Registration Form</title>
+  <link rel="stylesheet" href="../static/css/style.css">
+</head>
+
+<body>
+  <div class="wrapper">
+    <form action="/" method="post">
+      <img src="../static/img/EMOT.PNG  " class="logo">
+      <h2>Create Account</h2>
+
+
+<div class="input-field">
+  <input type="text" id="name" name="name" required pattern="[a-zA-Z ]{3,}" title="Name should be at least 3 characters long and only contain letters and spaces" onblur="checkName()">
+  <label id="l1">Enter your full name</label>
+  <div id="name-error" style="display: none; color: red;"></div>
+</div>
+<div class="input-field">
+  <input type="text" id="email" name="email" required onblur="checkEmail()">
+  <label id="l2">Enter your email</label>
+  <div id="email-error" style="display: none; color: red;"></div>
+</div>
+<div class="input-field">
+  <input type="text" id="phone_number" name="phone_number" required onblur="checkPhoneNumber()">
+  <label id="l3">Enter your phone number</label>
+  <div id="phone_number-error" style="display: none; color: red;"></div>
+</div>
+<div class="input-field">
+  <input type="password" id="password" name="password" required onblur="checkPassword()">
+  <label id="l4">Enter your password</label>
+  <div id="password-error" style="display: none; color: red;"></div>
+</div>
+<div class="input-field">
+  <input type="password" id="confirm_password" name="confirm_password" required onblur="checkConfirmPassword()">
+  <label id="l5">Enter your confirm password</label>
+  <div id="confirm_password-error" style="display: none; color: red;"></div>
+</div> 
+ <button type="submit">Sign Up</button>
+      <div class="register">
+        <p>Already have an account? <a href="/login">Login</a></p>
+      </div>
+    </form>
+  </div>
+  <script>
+    function checkName() {
+      var name = document.getElementById("name");
+      var error = document.getElementById("name-error");
+      let l1 = document.getElementById("l1");
+      if (name.value.match(/^[a-zA-Z ]{3,}$/)) {
+        name.style.border = "1.6px solid green";
+        error.style.display = "none";
+      } else {
+        name.style.border = "1px solid red";
+        error.style.display = "block";
+        error.innerText = "Name should be at least 3 characters long and only contain letters and spaces";
+        l1.style.display = "none"
+      }
+    }
+  
+    function checkEmail() {
+      var email = document.getElementById("email");
+      var error = document.getElementById("email-error");
+      let l2 = document.getElementById("l2");
+      var emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      if (email.value.match(emailRegex)) {
+        email.style.border = "1px solid green";
+        error.style.display = "none";
+      } else {
+        email.style.border = "1px solid red";
+        error.style.display = "block";
+        error.innerText = "Invalid email address";
+        l2.style.display = "none"
+
+      }
+    }
+  
+    function checkPhoneNumber() {
+      var phoneNumber = document.getElementById("phone_number");
+      var error = document.getElementById("phone_number-error");
+      let l1 = document.getElementById("l3");
+      var phoneRegex = /^\d{10}$/;
+      if (phoneNumber.value.match(phoneRegex)) {
+        phoneNumber.style.border = "1px solid green";
+        error.style.display = "none";
+      } else {
+        phoneNumber.style.border = "1px solid red";
+        error.style.display = "block";
+        error.innerText = "Phone number should be 10 digits long";
+        l1.style.display = "none"
+
+      }
+    }
+  
+    function checkPassword() {
+      var password = document.getElementById("password");
+      var error = document.getElementById("password-error");
+      var passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+      let l2 = document.getElementById("l2");
+      if (password.value.match(passwordRegex)) {
+        password.style.border = "1px solid green";
+        error.style.display = "none";
+      } else {
+        password.style.border = "1px solid red";
+        error.style.display = "block";
+        error.innerText = "Password should be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, one number and one special character";
+        l1.style.display = "none"
+        
+      }
+    }
+  
+    function checkConfirmPassword() {
+      var confirmPassword = document.getElementById("confirm_password");
+      var password = document.getElementById("password");
+      var error = document.getElementById("confirm_password-error");
+      if (confirmPassword.value === password.value) { 
+        confirmPassword.style.border = "1px solid green";
+        error.style.display = "none";
+      } else {
+        confirmPassword.style.border = "1px solid red";
+        error.style.display = "block";
+        error.innerText = "Passwords do not match";
+      }
+    }
+  </script>
+</body>
+
+
+
+</html>

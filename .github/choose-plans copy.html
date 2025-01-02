@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choose Your Plan</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="../static/css/css/style.css">
+    <style>
+    
+
+      /* Additional styles for the header and logout button */
+      header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 9px 20px;
+          background-color: #f8f9fa; /* Light background for the header */
+      }
+      .navbar {
+            display: flex;
+            gap: 20px; /* Space between navbar items */
+        }
+        .navbar ul {
+            list-style: none; /* Remove bullet points */
+            display: flex; /* Display items in a row */
+            margin: 0; /* Remove default margin */
+            padding: 0; /* Remove default padding */
+        }
+        .navbar li {
+            margin: 0 10px; /* Space between items */
+        }
+        .navbar a {
+            text-decoration: none; /* Remove underline */
+            color: #41529d; /* Link color */
+            font-weight: bold; /* Bold text */
+        }
+      .logout-button {
+          background-color: #41529d; /* Bootstrap danger color */
+          color: white;
+          border: none;
+          padding: 10px 15px;
+          border-radius: 5px;
+          cursor: pointer;
+          text-decoration: none; /* Remove underline */
+      }
+      .logout-button:hover {
+          background-color: #c82333; /* Darker shade on hover */
+      }
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal2 {
+            /* display: none; */
+            position: fixed;
+            backdrop-filter: blur(5px);
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: none;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: #609b63;
+            padding: 20px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 800px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            font-family: Arial, sans-serif;
+        }
+
+        .modal-content2 {
+            background: #fff;
+            padding: 20px;
+            position: relative;
+
+            border-radius: 10px;
+            width: 90%;
+            max-width: 800px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 10px;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            color: #ffffff;
+        }
+
+        .modal-header .close {
+            cursor: pointer;
+            font-size: 24px;
+            background: none;
+            border: none;
+            color: #ffffff;
+
+        }
+
+        .modal-header .close2 {
+            cursor: pointer;
+            font-size: 24px;
+            background: none;
+            border: none;
+            color: black;
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+
+        .modal-body {
+            padding: 20px 0;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .plan-card {
+            flex: 1;
+            max-width: 180px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            background-color: #f9f9f9;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .plan-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .plan-card h3 {
+            font-size: 18px;
+            margin: 10px 0;
+            color: #333;
+        }
+
+        .plan-card .price {
+            font-size: 22px;
+            font-weight: bold;
+            color: #007BFF;
+        }
+
+        .plan-card .save {
+            font-size: 14px;
+            color: #28a745;
+            margin-bottom: 10px;
+        }
+
+        .plan-card input[type="radio"] {
+            margin-top: 15px;
+        }
+
+        .btn-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .btn-container button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .btn-container button:hover {
+            background-color: #0056b3;
+        }
+
+        .upload-section {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .upload-section label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .upload-section input[type="file"] {
+            padding: 10px;
+            /* border: 1px solid #ccc; */
+            border-radius: 5px;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .upload-section .file-list {
+            margin-top: 10px;
+            color: #555;
+        }
+
+        .mb {
+            margin-bottom: 2vh;
+        }
+
+        .span1 {
+            display: block;
+            margin: 27px 0px;
+        }
+        .success {
+        color: green;
+        }
+        .error {
+            color: red;
+        }
+        /* Basic styles for the dropdown */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 114px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            margin-left: -56px;
+            padding-left: 40px;
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 10px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+
+        /* .dropdown:hover .dropdown-content {
+            display: block; Show the dropdown on hover
+        } */
+    </style>
+</head>
+
+<body>
+    <main>
+        <header>
+            <div class="logo2">
+                <a href="#">
+                    <img src="../static/img/EMOT.PNG" alt="Device Master Logo">
+                </a>
+            </div>
+            <!-- <nav class="navbar">
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Profile</a></li>
+                    <li><a href="#">Contact</a></li> -->
+                <!-- </ul>
+            </nav>  -->
+            <!-- <a href="/logout" class="logout-button">Logout</a> Logout button -->
+            <!-- <a href="/profile"><i class="fas fa-user" aria-hidden="true" style="font-size: 42px;"></i></a> Logout button -->
+            <div class="dropdown">
+                <i class="fas fa-user" aria-hidden="true" style="font-size: 45px; margin-right: 91px; color: #1e1e8b;"></i>
+                <div class="dropdown-content">
+                    <a href="/profile">Profile</a>
+                    <a href="/settings">Settings</a>
+                    <a href="/logout">Logout</a>
+                </div>
+            </div>
+        </header>
+            <section class="sec3">
+
+                <div class="left">
+                    <!-- Display flashed messages -->
+                        {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                            {% for category, message in messages %}
+                            <h3 class="{{ category }}">{{ message }}</h3>
+                            {% endfor %}
+                        {% endif %}
+                        {% endwith %}
+                    <!-- Your plan selection form goes here -->
+                    <h1>EMOT - Automation For Gmail</h1>
+                    <h4></h4>
+                    <p>Automation for Manual Email blasting for Gmail</p>
+                    <ol>
+                        <li>Click on the <b> "Choose Plan" </b>button below</li>
+                        <li>Select the <b>plan</b>according to your use</li>
+                        <li>Make the<b> payment in</b> the given QR</li>
+                        <li>Once the<b> payment is</b> confirmed you will get the Activation key in your registered
+                            email</li>
+                        <li>Once the<b> payment is</b> confirmed you will get the Activation key in your registered
+                            email</li>
+                    </ol>
+                    <div class="qr">
+                        <img src="../static/img/qr.png" alt="Payment QR">
+                    </div>
+                    <div class="btn">
+                        <button id="choosePlanBtn">Choose Plan</button>
+                        <button id="uploadScreenshotBtn">Upload Payment Screenshot</button>
+                    </div>
+                </div>
+
+                <div class="right">
+                    <div class="card">
+                        <a href="https://geektemplate123456.s3.eu-north-1.amazonaws.com/SingleGmailSender_Setup.exe"><button>Download
+                                Now</button></a>
+                        <span><b>Step1: </b> Click on Download Now</span>
+                        <span><b>Step2: </b> Install and launch the application</span>
+                        <span><b>Step3: </b> Copy the Activation key and paste it on the field asking for Activation key
+                            after installation</span>
+                    </div>
+                </div>
+            </section>
+
+
+        </div>
+    </main>
+
+    <!-- Modal -->
+    <div id="planModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Select Your Plan</h2>
+                <button class="close" id="closeModalBtn">&times;</button>
+            </div>
+            <form id="planForm" action="/plan_selection " method="post">
+
+                <div class="modal-body">
+                    <!-- Plan Cards -->
+
+                    <div class="plan-card" onclick="selectPlan(this)">
+                        <h3>1 Week</h3>
+                        <div class="price">$10</div>
+                        <div class="save">You Save: $0</div>
+                        <input type="radio" name="plan" value="1_week" required>
+                    </div>
+                    <div class="plan-card" onclick="selectPlan(this)">
+                        <h3>1 Month</h3>
+                        <div class="price">$30</div>
+                        <div class="save">You Save: $10</div>
+                        <input type="radio" name="plan" value="1_month" required>
+                    </div>
+                    <div class="plan-card" onclick="selectPlan(this)">
+                        <h3>6 Months</h3>
+                        <div class="price">$150</div>
+                        <div class="save">You Save: $60</div>
+                        <input type="radio" name="plan" value="6_months" required>
+                    </div>
+                    <div class="plan-card" onclick="selectPlan(this)">
+                        <h3>1 Year</h3>
+                        <div class="price">$250</div>
+                        <div class="save">You Save: $70</div>
+                        <input type="radio" name="plan" value="1_year" required>
+                    </div>
+                </div>
+                <div class="btn-container">
+                    <button type="submit">Add to Cart</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="planModal2" class="modal2">
+        <div class="modal-content2">
+            <div class="modal-header">
+                <!-- <h2>Select Your File</h2> -->
+                <button class="close close2" id="closeModalBtn2">&times;</button>
+
+                <div class="upload-section" id="uploadSection">
+                    <form id="paymentForm" action="/choose_plan" method="POST" enctype="multipart/form-data">
+                        <label for="paymentScreenshot">Upload Payment Screenshot:</label>
+                        <input type="file" name="paymentScreenshot" id="paymentScreenshot" name="paymentScreenshot"
+                            accept="image/*" >
+                        <span class="span1">OR</span>
+
+                        <input type="text" placeholder="Transaction number" id="transacrtionNumber"
+                            name="transacrtionNumber" class="mb">
+                        <button type="submit">Submit</button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <script>
+        // JavaScript for modal functionality
+        const choosePlanBtn = document.getElementById('choosePlanBtn');
+        const chooseSSBtn = document.getElementById('uploadScreenshotBtn');
+        const modal = document.getElementById('planModal');
+        const modal2 = document.getElementById('planModal2');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        const closeModalBtn2 = document.getElementById('closeModalBtn2');
+        const uploadScreenshotBtn = document.getElementById('uploadScreenshotBtn');
+        const uploadSection = document.getElementById('uploadSection');
+        const paymentForm = document.getElementById('paymentForm');
+        const paymentScreenshotInput = document.getElementById('paymentScreenshot');
+
+        // Show modal when "Choose Plan" button is clicked
+        choosePlanBtn.addEventListener('click', () => {
+            modal.style.display = 'flex';
+        });
+
+        chooseSSBtn.addEventListener('click', () => {
+            modal2.style.display = 'flex';
+        });
+        closeModalBtn2.addEventListener('click', () => {
+            modal2.style.display = 'none';
+            console.log("click")
+        });
+        // Close modal when close button or area outside modal is clicked
+        closeModalBtn.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+
+        closeModalBtn.addEventListener('click', () => {
+            modal2.style.display = 'none';
+        });
+
+        window.addEventListener('click', (event) => {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+                // modal2.style.display = 'none';
+            }
+        });
+
+        window.addEventListener('click', (event) => {
+            if (event.target === modal2) {
+                // modal.style.display = 'none';
+                modal2.style.display = 'none';
+            }
+        });
+
+        // Save selected plan to localStorage
+
+        document.getElementById('planForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            const selectedPlan = document.querySelector('input[name="plan"]:checked').value; // Get the selected plan
+            localStorage.setItem('selectedPlan', selectedPlan);
+            modal.style.display = 'none'; // Close the modal
+            uploadSection.style.display = 'block'; // Show upload section
+
+            fetch('/plan_selection', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ plan: selectedPlan })  // Use the actual selectedPlan variable
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log(data);
+                alert("Plan selected successfully!"); // Notify user
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert("There was an error selecting the plan.");
+            });
+        });
+
+
+
+
+        // Show the file input section when the "Upload Payment Screenshot" button is clicked
+        uploadScreenshotBtn.addEventListener('click', () => {
+            uploadSection.style.display = 'block';
+        });
+
+
+
+       
+
+        function selectPlan(card) {
+
+            let planCards = document.querySelectorAll('.plan-card');
+            planCards.forEach(card => {
+                card.classList.remove('selected');
+            });
+
+
+            card.classList.add('selected');
+
+
+            let radioButton = card.querySelector('input[type="radio"]');
+            if (radioButton) {
+                radioButton.checked = true;
+            }
+        }
+
+
+            document.querySelector('.dropdown').addEventListener('click', function() {
+                const dropdownContent = this.querySelector('.dropdown-content');
+                dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
+            });
+
+            // Close the dropdown if the user clicks outside of it
+            window.onclick = function(event) {
+                if (!event.target.matches('.dropdown *')) {
+                    const dropdowns = document.getElementsByClassName("dropdown-content");
+                    for (let i = 0; i < dropdowns.length; i++) {
+                        dropdowns[i].style.display = "none";
+                    }
+                }
+        }
+
+
+    </script>
+</body>
+
+</html>
